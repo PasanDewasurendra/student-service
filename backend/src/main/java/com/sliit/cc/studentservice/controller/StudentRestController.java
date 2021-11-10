@@ -39,6 +39,11 @@ public class StudentRestController {
         return ResponseEntity.ok(studentService.get(id));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Student>> getAllStudents(){
+        return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
     @GetMapping("/id/{studentId}")
     public ResponseEntity<Student> getStudentByIdNumber(@PathVariable String studentId){
         Student student = studentService.getByStudentId(studentId);

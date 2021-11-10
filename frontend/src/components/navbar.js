@@ -15,17 +15,36 @@ export default class Navbar extends Component {
 
         if(localStorage.getItem('user')){
 
-            return (
-                <nav className="navbar navbar-dark bg-dark navbar-expand">
-                    <Link to="/" className="navbar-brand">Student Service</Link>
-                    <div className="collapse navbar-collapse">
-                        <ul className="navbar-nav mr-auto">
-                        <li><Link to="student/profile" className="nav-link">Profile</Link></li>
-                        <li><Link to="" onClick={() => this.logout()} className="nav-link ">Logout</Link></li>
-                        </ul>
-                    </div>
-                </nav>
-            )
+            const user = JSON.parse(localStorage.getItem('user'));
+            // console.log("admin user: ", user);
+
+            if(user.email === "admin@studentservice.lk" && user.password === "admin"){
+
+                return (
+                    <nav className="navbar navbar-dark bg-dark navbar-expand">
+                        <Link to="/" className="navbar-brand">Student Service</Link>
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav mr-auto">
+                            <li><Link to="/staff/student-dashboard" className="nav-link">Student Dashboard</Link></li>
+                            <li><Link to="" onClick={() => this.logout()} className="nav-link ">Logout</Link></li>
+                            </ul>
+                        </div>
+                    </nav>
+                )  
+
+            }else{
+                return (
+                    <nav className="navbar navbar-dark bg-dark navbar-expand">
+                        <Link to="/" className="navbar-brand">Student Service</Link>
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav mr-auto">
+                            <li><Link to="student/profile" className="nav-link">Profile</Link></li>
+                            <li><Link to="" onClick={() => this.logout()} className="nav-link ">Logout</Link></li>
+                            </ul>
+                        </div>
+                    </nav>
+                )
+            }
             
         }else{
 
