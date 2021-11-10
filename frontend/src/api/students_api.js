@@ -8,11 +8,10 @@ export default {
 
         return{
             newStudent: data => axios.post(url+'new', data),
+            authenticate: data => axios.post(url+'authenticate', data),
             getStudentDataById: id => axios.get(url+'id/' + id),
-            updateStudentDataById: (id, data) => axios.put(url + id, data),
-            deleteStudentDataById: id => axios.delete(url + id)
-
+            updateStudentDataById: (id, data) => axios.put(url+'id/' + id, data),
+            deleteStudentDataById: id => axios.delete(url+'id/' + id)
         }
     }
-    
 }

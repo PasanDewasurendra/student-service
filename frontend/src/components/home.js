@@ -16,17 +16,17 @@ export default class Home extends Component {
                             <div className="col-md-4">
 
                                 <img src="/sliit-logo.png" alt="sliit-logo" />
-                                <p class="display-4 text-secondary font-weight-bold">SLIIT</p>
+                                <p className="display-4 text-secondary font-weight-bold">SLIIT</p>
 
                             </div>
                             <div class="col-md-8 align-content-center">
 
                                 <h1><span className="fa fa-lock"></span>Cloud Computing Assignment 1</h1>
-                                <h4>3-Tier Web Application deploy with</h4><span class="lead font-weight-bold">Docker</span>
+                                <h4>3-Tier Web Application deploy with</h4><span className="lead font-weight-bold">Docker</span>
                                 <br />
-                                <hr class=""/>
+                                <hr />
 
-                                <Link to="/student/new" className="btn btn-danger mt-3 px-5 navbar-brand"><i class="bi bi-arrow-90deg-right"></i> Start</Link>
+                                <Link to="/student/new" className="btn btn-danger mt-3 px-5 navbar-brand"><i className="bi bi-arrow-90deg-right"></i> Start</Link>
 
                             </div>
                         </div>
