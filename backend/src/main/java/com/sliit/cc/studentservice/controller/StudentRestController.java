@@ -1,5 +1,6 @@
 package com.sliit.cc.studentservice.controller;
 
+import com.sliit.cc.studentservice.entity.LoginRequest;
 import com.sliit.cc.studentservice.entity.Student;
 import com.sliit.cc.studentservice.service.StudentService;
 import org.codehaus.jettison.json.JSONObject;
@@ -24,9 +25,13 @@ public class StudentRestController {
     public ResponseEntity<String> newStudent(@RequestBody Student student) throws Exception {
         JSONObject response = new JSONObject();
 
-        Student std =  studentService.create(student);
-        response.put("id", student.getStudentId());
-        return ResponseEntity.created((URI.create("/students/new/"+std.getStudentId()))).body(response.toString());
+        Student result =  studentService.create(student);
+        if (result != null){
+            response.put("id", student.getStudentId());
+            return ResponseEntity.created((URI.create("/students/new/"+result.getStudentId()))).body(response.toString());
+        }
+        response.put("status", "student already exists.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response.toString());
     }
 
     @GetMapping("/{id}")
@@ -40,16 +45,26 @@ public class StudentRestController {
         return ResponseEntity.ok(student);
     }
 
-    @PutMapping(value = "/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateStudent(@RequestBody Student student,  @PathVariable String id) throws Exception {
-        Boolean success = studentService.update(id, student);
+    @PostMapping("/authenticate")
+    public ResponseEntity<Object> authenticateStudent(@RequestBody LoginRequest request){
+        Student student = studentService.authenticate(request);
+        if (student != null){
+            return ResponseEntity.ok(studentService.authenticate(request));
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student Not Found.");
+        }
+    }
+
+    @PutMapping(value = "/id/{studentId}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateStudent(@RequestBody Student student,  @PathVariable String studentId) throws Exception {
+        Boolean success = studentService.update(studentId, student);
         JSONObject response = new JSONObject().put("success", success);
         return ResponseEntity.ok().body(response.toString());
     }
 
-    @DeleteMapping(value = "/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteStudent(@PathVariable String id) throws Exception {
-        Boolean success = studentService.delete(id);
+    @DeleteMapping(value = "/id/{studentId}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteStudent(@PathVariable String studentId) throws Exception {
+        Boolean success = studentService.deleteByStudentId(studentId);
         JSONObject response = new JSONObject().put("success", success);
         return ResponseEntity.ok().body(response.toString());
     }
