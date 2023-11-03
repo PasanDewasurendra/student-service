@@ -18,7 +18,7 @@ services:
     container_name: springboot-studentservice
     build:
       context: ./backend
-      dockerfile: ./dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - 8080:8080
     volumes:
